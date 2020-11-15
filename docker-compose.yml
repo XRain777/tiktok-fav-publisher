@@ -1,9 +1,7 @@
 version: '3'
 services:
   app:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: xrain777/tiktok-fav-publisher:latest
     restart: always
     depends_on:
       - redis
