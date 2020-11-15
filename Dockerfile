@@ -14,7 +14,9 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -o 
 FROM alpine
 
 COPY --from=builder /etc/passwd /etc/passwd
+RUN mkdir /app && chown appuser /app
 COPY --from=builder /go/bin/app /go/bin/app
 
 USER appuser
+WORKDIR /app
 ENTRYPOINT ["/go/bin/app"]

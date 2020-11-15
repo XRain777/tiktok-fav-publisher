@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - redis
+    environment:
+      DB_ADDR: '${DB_ADDR}'
+      TG_TOKEN: '${TG_TOKEN}'
+      CHANNEL_ID: '${CHANNEL_ID}'
+      TIKTOK_USERNAME: '${TIKTOK_USERNAME}'
+      VK_TOKEN: '${VK_TOKEN}'
+      VK_CHAT_ID: ${VK_CHAT_ID}
+  redis:
+    image: "redis:alpine"
+    command: ["redis-server", "--appendonly", "yes"]
+    restart: always
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:

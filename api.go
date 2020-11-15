@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/valyala/fasthttp"
 	"math/rand"
 	"net/http"
 	"regexp"
 	"time"
+
+	"github.com/valyala/fasthttp"
 )
 
-const Aid = 1233
-const UserAgent = "com.zhiliaoapp.musically"
+const aid = 1233
+const userAgent = "com.zhiliaoapp.musically"
 
 var secUIDReg = regexp.MustCompile(`(?m)secUid":"(.*?)"`)
 var seededRand = rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -23,7 +24,7 @@ func getSecUserID(username string) (string, error) {
 
 	req.Header.SetMethod(http.MethodGet)
 	req.SetRequestURI("https://www.tiktok.com/@" + username)
-	req.Header.SetUserAgent(UserAgent)
+	req.Header.SetUserAgent(userAgent)
 
 	err := fasthttp.Do(req, res)
 	if err != nil {
@@ -45,8 +46,8 @@ func getLikedVideos(secUserID string, count int) ([]video, error) {
 	req.Header.SetMethod(http.MethodGet)
 	req.SetRequestURI("https://api16-normal-c-alisg.tiktokv.com/aweme/v1/aweme/favorite/?" +
 		fmt.Sprintf("aid=%d&device_id=%d&sec_user_id=%s&count=%d",
-			Aid, 1000000000+seededRand.Intn(1000000000), secUserID, count))
-	req.Header.SetUserAgent(UserAgent)
+			aid, 1000000000+seededRand.Intn(1000000000), secUserID, count))
+	req.Header.SetUserAgent(userAgent)
 
 	err := fasthttp.Do(req, res)
 	if err != nil {
