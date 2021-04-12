@@ -26,7 +26,7 @@ func getSecUserID(username string) (string, error) {
 
 	req.Header.SetMethod(http.MethodGet)
 	req.SetRequestURI("https://www.tiktok.com/@" + username)
-	req.Header.SetUserAgent(userAgent)
+	req.Header.SetUserAgent(UserAgent)
 
 	err := fasthttp.Do(req, res)
 	if err != nil {
